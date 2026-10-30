@@ -227,14 +227,23 @@ export const Header: React.FC<HeaderProps> = ({
             </motion.a>
 
             <motion.button
-              whileTap={{ scale: 0.92 }}
+              whileTap={{ scale: 0.9 }}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl text-on-surface hover:bg-surface-container transition-colors border border-outline-variant/40"
+              className="lg:hidden p-2 rounded-xl text-on-surface hover:bg-surface-container transition-colors border border-outline-variant/40 flex items-center justify-center w-10 h-10"
               aria-label={mobileMenuOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação'}
             >
-              <span className="material-symbols-outlined text-[24px]">
-                {mobileMenuOpen ? 'close' : 'menu'}
-              </span>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={mobileMenuOpen ? 'close' : 'menu'}
+                  initial={{ opacity: 0, rotate: -90, scale: 0.8 }}
+                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                  exit={{ opacity: 0, rotate: 90, scale: 0.8 }}
+                  transition={{ duration: 0.18 }}
+                  className="material-symbols-outlined text-[24px] select-none"
+                >
+                  {mobileMenuOpen ? 'close' : 'menu'}
+                </motion.span>
+              </AnimatePresence>
             </motion.button>
           </div>
         </div>
@@ -243,13 +252,27 @@ export const Header: React.FC<HeaderProps> = ({
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] as const }}
-            className="lg:hidden overflow-hidden bg-surface-container-lowest border-b border-outline-variant/30 px-margin-mobile py-4 shadow-2xl"
+            key="mobile-nav-menu"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{
+              height: 'auto',
+              opacity: 1,
+              transition: {
+                height: { duration: 0.32, ease: [0.16, 1, 0.3, 1] },
+                opacity: { duration: 0.25, ease: 'easeOut' },
+              },
+            }}
+            exit={{
+              height: 0,
+              opacity: 0,
+              transition: {
+                height: { duration: 0.28, ease: [0.16, 1, 0.3, 1] },
+                opacity: { duration: 0.2, ease: 'easeIn' },
+              },
+            }}
+            className="lg:hidden overflow-hidden bg-surface-container-lowest border-b border-outline-variant/30 shadow-2xl"
           >
-            <div className="flex flex-col space-y-2">
+            <div className="px-margin-mobile py-4 flex flex-col space-y-2">
               <div className="relative flex items-center w-full mb-2">
                 <span className="material-symbols-outlined absolute left-3 text-outline text-[18px]">
                   search
