@@ -24,7 +24,6 @@
   }
 }
 
-/* Material Symbols Outlined font ligatures and rendering */
 .material-symbols-outlined {
   font-family: 'Material Symbols Outlined' !important;
   font-weight: normal;
@@ -44,7 +43,6 @@
   vertical-align: middle;
 }
 
-/* Custom scrollbar hiding */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -53,12 +51,10 @@
   scrollbar-width: none;
 }
 
-/* Tabular figures for prices */
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
 
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }

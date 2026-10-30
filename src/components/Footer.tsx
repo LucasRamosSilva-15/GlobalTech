@@ -1,11 +1,20 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="w-full bg-surface-container-lowest border-t border-outline-variant/30 text-on-surface-variant">
-      <div className="max-w-[1440px] mx-auto px-margin-mobile lg:px-margin pt-16 pb-12">
+    <footer className="w-full bg-surface-container-lowest border-t border-outline-variant/30 text-on-surface-variant overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-50px' }}
+        transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+        className="max-w-[1440px] mx-auto px-margin-mobile lg:px-margin pt-16 pb-12"
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
@@ -43,27 +52,27 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2.5 font-body-sm text-body-sm">
               <li>
-                <a className="hover:text-primary transition-colors" href="#catalogo-produtos">
+                <a className="hover:text-primary transition-colors inline-block hover:translate-x-1 duration-200" href="#catalogo-produtos">
                   iPhones Seminovos
                 </a>
               </li>
               <li>
-                <a className="hover:text-primary transition-colors" href="#catalogo-produtos">
+                <a className="hover:text-primary transition-colors inline-block hover:translate-x-1 duration-200" href="#catalogo-produtos">
                   MacBooks &amp; iPads
                 </a>
               </li>
               <li>
-                <a className="hover:text-primary transition-colors" href="#catalogo-produtos">
+                <a className="hover:text-primary transition-colors inline-block hover:translate-x-1 duration-200" href="#catalogo-produtos">
                   Carregadores &amp; Cabos
                 </a>
               </li>
               <li>
-                <a className="hover:text-primary transition-colors" href="#catalogo-produtos">
+                <a className="hover:text-primary transition-colors inline-block hover:translate-x-1 duration-200" href="#catalogo-produtos">
                   Capas &amp; Películas 3D
                 </a>
               </li>
               <li>
-                <a className="hover:text-primary transition-colors" href="#assistencia-tecnica">
+                <a className="hover:text-primary transition-colors inline-block hover:translate-x-1 duration-200" href="#assistencia-tecnica">
                   Troca de Tela &amp; Bateria
                 </a>
               </li>
@@ -77,7 +86,7 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2.5 font-body-sm text-body-sm">
               <li>
                 <a
-                  className="hover:text-primary transition-colors"
+                  className="hover:text-primary transition-colors inline-block hover:translate-x-1 duration-200"
                   href="https://wa.me/5583988970601?text=Ol%C3%A1%2C+gostaria+de+consultar+minha+ordem+de+servi%C3%A7o"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -86,18 +95,18 @@ export const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a className="hover:text-primary transition-colors" href="#assistencia-tecnica">
+                <a className="hover:text-primary transition-colors inline-block hover:translate-x-1 duration-200" href="#assistencia-tecnica">
                   Política de Garantia
                 </a>
               </li>
               <li>
-                <a className="hover:text-primary transition-colors" href="#onde-estamos">
+                <a className="hover:text-primary transition-colors inline-block hover:translate-x-1 duration-200" href="#onde-estamos">
                   Agendamento Técnico
                 </a>
               </li>
               <li>
                 <a
-                  className="hover:text-primary transition-colors"
+                  className="hover:text-primary transition-colors inline-block hover:translate-x-1 duration-200"
                   href="https://wa.me/5583988970601"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -159,8 +168,7 @@ export const Footer: React.FC = () => {
             </Link>
           </div>
         </div>
-      </div>
+      </motion.div>
     </footer>
   );
 };
-

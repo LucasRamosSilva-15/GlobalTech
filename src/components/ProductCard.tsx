@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import { Product } from '@/types';
 
 interface ProductCardProps {
@@ -31,7 +32,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect }) =
   const whatsappUrl = `https://wa.me/5583988970601?text=${encodeURIComponent(product.whatsappMessage)}`;
 
   return (
-    <div className="product-item bg-surface-container-lowest rounded-2xl p-5 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group border border-outline-variant/30 hover:border-primary/20">
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 20, scale: 0.96 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.92 }}
+      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ y: -6 }}
+      className="product-item bg-surface-container-lowest rounded-2xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group border border-outline-variant/30 hover:border-primary/30"
+    >
       <div>
         <div className="flex items-center justify-between mb-3">
           <span
@@ -49,14 +58,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect }) =
 
         <div
           onClick={() => onSelect?.(product)}
-          className="relative w-full aspect-square rounded-xl bg-surface-container-low overflow-hidden mb-4 flex items-center justify-center p-3 group-hover:scale-[1.02] transition-transform cursor-pointer"
+          className="relative w-full aspect-square rounded-xl bg-surface-container-low overflow-hidden mb-4 flex items-center justify-center p-3 cursor-pointer"
         >
           <Image
             src={product.image}
             alt={product.alt}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            className="object-contain p-2"
+            className="object-contain p-2 group-hover:scale-108 transition-transform duration-500 ease-out"
           />
         </div>
 
@@ -65,7 +74,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect }) =
         </div>
         <h3
           onClick={() => onSelect?.(product)}
-          className="font-headline-sm text-[16px] font-bold text-on-surface leading-snug line-clamp-2 cursor-pointer hover:text-primary transition-colors"
+          className="font-headline-sm text-[16px] font-bold text-on-surface leading-snug line-clamp-2 cursor-pointer group-hover:text-primary transition-colors"
         >
           {product.name}
         </h3>
@@ -82,17 +91,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect }) =
         <div className="font-body-sm text-[12px] text-on-surface-variant pb-4">
           {product.installments}
         </div>
-        <a
+        <motion.a
+          whileHover={{ scale: 1.025 }}
+          whileTap={{ scale: 0.96 }}
+          transition={{ type: 'spring', stiffness: 450, damping: 25 }}
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-tertiary text-on-tertiary font-label-md text-label-md hover:bg-tertiary-container transition-all shadow-sm active:scale-95"
+          className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-tertiary text-on-tertiary font-label-md text-label-md hover:bg-tertiary-container transition-colors shadow-sm"
         >
           <span className="material-symbols-outlined text-[18px]">chat</span>
           <span>Pedir no WhatsApp</span>
-        </a>
+        </motion.a>
       </div>
-    </div>
+    </motion.div>
   );
 };
-

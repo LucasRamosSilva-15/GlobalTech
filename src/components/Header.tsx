@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface HeaderProps {
   onSearchClick?: () => void;
@@ -26,8 +27,16 @@ export const Header: React.FC<HeaderProps> = ({
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-all">
-      {/* Top micro banner */}
+    <motion.header
+      initial={{ y: -60, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? 'bg-surface/95 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.06)]'
+          : 'bg-surface/90 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]'
+      }`}
+    >
       <div className="bg-surface-container-low border-b border-outline-variant/40 text-on-surface-variant font-label-sm text-label-sm">
         <div className="max-w-[1440px] mx-auto px-margin-mobile lg:px-margin h-10 flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 truncate">
@@ -47,11 +56,15 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      {/* Main navigation */}
       <div className="h-20 max-w-[1440px] mx-auto px-margin-mobile lg:px-margin flex items-center justify-between gap-4 lg:gap-6">
         <div className="flex items-center gap-6 lg:gap-8 shrink-0">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative h-9 w-9 rounded-lg overflow-hidden flex items-center justify-center bg-primary/10">
+            <motion.div
+              whileHover={{ scale: 1.08, rotate: -2 }}
+              whileTap={{ scale: 0.94 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+              className="relative h-9 w-9 rounded-lg overflow-hidden flex items-center justify-center bg-primary/10 shadow-sm"
+            >
               <Image
                 src="/logo.png"
                 alt="Globaltech Logo"
@@ -60,7 +73,7 @@ export const Header: React.FC<HeaderProps> = ({
                 className="object-contain"
                 priority
               />
-            </div>
+            </motion.div>
             <span className="font-headline-sm text-headline-sm font-bold text-on-surface tracking-tight group-hover:text-primary transition-colors">
               GLOBALTECH
             </span>
@@ -69,40 +82,43 @@ export const Header: React.FC<HeaderProps> = ({
           <nav className="hidden xl:flex items-center gap-6">
             <a
               href="#catalogo-produtos"
-              className="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors font-medium"
+              className="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors font-medium relative group py-1"
             >
-              Catálogo
+              <span>Catálogo</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary rounded-full transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a
               href="#catalogo-produtos"
-              className="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors font-medium"
+              className="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors font-medium relative group py-1"
             >
-              Seminovos
+              <span>Seminovos</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary rounded-full transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a
               href="#catalogo-produtos"
-              className="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors font-medium"
+              className="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors font-medium relative group py-1"
             >
-              Acessórios
+              <span>Acessórios</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary rounded-full transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a
               href="#assistencia-tecnica"
-              className="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors font-medium"
+              className="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors font-medium relative group py-1"
             >
-              Orçamento de Reparo
+              <span>Orçamento de Reparo</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary rounded-full transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a
               href="#onde-estamos"
-              className="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors font-medium"
+              className="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors font-medium relative group py-1"
             >
-              Onde Estamos
+              <span>Onde Estamos</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary rounded-full transition-all duration-300 group-hover:w-full"></span>
             </a>
           </nav>
         </div>
 
-        {/* Search & Actions */}
         <div className="flex items-center gap-3 sm:gap-4 flex-1 justify-end max-w-xl">
-          {/* Desktop Search */}
           <div className="relative hidden md:flex items-center w-full max-w-xs lg:max-w-sm">
             <span className="material-symbols-outlined absolute left-3 text-outline text-[18px] pointer-events-none">
               search
@@ -121,7 +137,6 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {/* Consultant badge */}
             <div className="hidden lg:flex items-center gap-2 pl-2 border-l border-outline-variant/40">
               <div className="relative w-8 h-8 rounded-full overflow-hidden ring-2 ring-surface-container-high shrink-0">
                 <Image
@@ -136,26 +151,28 @@ export const Header: React.FC<HeaderProps> = ({
                   Consultoria
                 </span>
                 <span className="text-[10px] text-tertiary leading-tight font-semibold flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-tertiary inline-block"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-tertiary inline-block animate-pulse"></span>
                   Online
                 </span>
               </div>
             </div>
 
-            {/* Direct WhatsApp button */}
-            <a
+            <motion.a
+              whileHover={{ scale: 1.03, y: -1 }}
+              whileTap={{ scale: 0.96 }}
+              transition={{ type: 'spring', stiffness: 450, damping: 25 }}
               href="https://wa.me/5583988970601?text=Ol%C3%A1%2C+gostaria+de+falar+com+um+consultor+da+Globaltech"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Falar com consultor via WhatsApp"
-              className="inline-flex items-center gap-2 h-10 px-3.5 sm:px-4 rounded-xl bg-tertiary text-on-tertiary font-label-md text-label-md hover:bg-tertiary-container transition-all shadow-sm active:scale-95 shrink-0"
+              className="inline-flex items-center gap-2 h-10 px-3.5 sm:px-4 rounded-xl bg-tertiary text-on-tertiary font-label-md text-label-md hover:bg-tertiary-container transition-colors shadow-sm shrink-0"
             >
               <span className="material-symbols-outlined text-[18px]">chat</span>
               <span className="hidden sm:inline">Falar com Consultor</span>
-            </a>
+            </motion.a>
 
-            {/* Mobile Hamburger Button */}
-            <button
+            <motion.button
+              whileTap={{ scale: 0.92 }}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="xl:hidden p-2 rounded-xl text-on-surface hover:bg-surface-container transition-colors"
               aria-label={mobileMenuOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação'}
@@ -163,67 +180,73 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="material-symbols-outlined text-[24px]">
                 {mobileMenuOpen ? 'close' : 'menu'}
               </span>
-            </button>
+            </motion.button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
-      {mobileMenuOpen && (
-        <div className="xl:hidden bg-surface-container-lowest border-b border-outline-variant/30 px-margin-mobile py-4 shadow-lg animate-in slide-in-from-top duration-200">
-          <div className="flex flex-col space-y-3">
-            {/* Mobile Search inside drawer */}
-            <div className="relative flex items-center w-full mb-2">
-              <span className="material-symbols-outlined absolute left-3 text-outline text-[18px]">
-                search
-              </span>
-              <input
-                type="text"
-                aria-label="Buscar produtos no catálogo"
-                value={searchQuery}
-                onChange={(e) => onSearchChange?.(e.target.value)}
-                placeholder="Buscar no catálogo..."
-                className="w-full h-11 pl-9 pr-3 bg-surface-container-low border border-outline-variant/50 rounded-xl font-body-sm text-body-sm text-on-surface"
-              />
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            className="xl:hidden overflow-hidden bg-surface-container-lowest border-b border-outline-variant/30 px-margin-mobile py-4 shadow-xl"
+          >
+            <div className="flex flex-col space-y-3">
+              <div className="relative flex items-center w-full mb-2">
+                <span className="material-symbols-outlined absolute left-3 text-outline text-[18px]">
+                  search
+                </span>
+                <input
+                  type="text"
+                  aria-label="Buscar produtos no catálogo"
+                  value={searchQuery}
+                  onChange={(e) => onSearchChange?.(e.target.value)}
+                  placeholder="Buscar no catálogo..."
+                  className="w-full h-11 pl-9 pr-3 bg-surface-container-low border border-outline-variant/50 rounded-xl font-body-sm text-body-sm text-on-surface"
+                />
+              </div>
+              <a
+                href="#catalogo-produtos"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-lg text-on-surface font-label-md hover:bg-surface-container transition-colors"
+              >
+                Catálogo de Produtos
+              </a>
+              <a
+                href="#catalogo-produtos"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-lg text-on-surface font-label-md hover:bg-surface-container transition-colors"
+              >
+                Seminovos Certificados
+              </a>
+              <a
+                href="#catalogo-produtos"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-lg text-on-surface font-label-md hover:bg-surface-container transition-colors"
+              >
+                Acessórios Premium
+              </a>
+              <a
+                href="#assistencia-tecnica"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-lg text-on-surface font-label-md hover:bg-surface-container transition-colors"
+              >
+                Orçamento de Reparo &amp; Bancada
+              </a>
+              <a
+                href="#onde-estamos"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-lg text-on-surface font-label-md hover:bg-surface-container transition-colors"
+              >
+                Onde Estamos (Intermares)
+              </a>
             </div>
-            <a
-              href="#catalogo-produtos"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-on-surface font-label-md hover:bg-surface-container transition-colors"
-            >
-              Catálogo de Produtos
-            </a>
-            <a
-              href="#catalogo-produtos"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-on-surface font-label-md hover:bg-surface-container transition-colors"
-            >
-              Seminovos Certificados
-            </a>
-            <a
-              href="#catalogo-produtos"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-on-surface font-label-md hover:bg-surface-container transition-colors"
-            >
-              Acessórios Premium
-            </a>
-            <a
-              href="#assistencia-tecnica"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-on-surface font-label-md hover:bg-surface-container transition-colors"
-            >
-              Orçamento de Reparo &amp; Bancada
-            </a>
-            <a
-              href="#onde-estamos"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-on-surface font-label-md hover:bg-surface-container transition-colors"
-            >
-              Onde Estamos (Intermares)
-            </a>
-          </div>
-        </div>
-      )}
-    </header>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   );
 };

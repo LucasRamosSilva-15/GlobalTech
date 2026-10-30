@@ -1,11 +1,19 @@
+'use client';
+
 import React from 'react';
+import { motion } from 'framer-motion';
 
 export const StoreLocation: React.FC = () => {
   return (
     <section className="w-full max-w-[1440px] mx-auto px-margin-mobile lg:px-margin py-12" id="onde-estamos">
-      <div className="bg-surface-container-lowest rounded-3xl p-8 lg:p-12 shadow-sm border border-outline-variant/30">
+      <motion.div
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+        className="bg-surface-container-lowest rounded-3xl p-8 lg:p-12 shadow-sm border border-outline-variant/30"
+      >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
-          {/* Left: Address, Hours and Contact Details */}
           <div className="lg:col-span-6 flex flex-col justify-between space-y-8">
             <div>
               <div className="font-mono-spec text-mono-spec text-primary font-semibold uppercase tracking-wider mb-2">
@@ -20,8 +28,14 @@ export const StoreLocation: React.FC = () => {
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-primary-fixed flex items-center justify-center text-primary shrink-0 mt-0.5">
+              <motion.div
+                initial={{ opacity: 0, x: -15 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="flex items-start gap-3.5 group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-primary-fixed flex items-center justify-center text-primary shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
                   <span className="material-symbols-outlined text-[20px]">location_on</span>
                 </div>
                 <div>
@@ -34,10 +48,16 @@ export const StoreLocation: React.FC = () => {
                     CEP 58102-142
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-secondary-fixed flex items-center justify-center text-secondary shrink-0 mt-0.5">
+              <motion.div
+                initial={{ opacity: 0, x: -15 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="flex items-start gap-3.5 group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-secondary-fixed flex items-center justify-center text-secondary shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
                   <span className="material-symbols-outlined text-[20px]">schedule</span>
                 </div>
                 <div>
@@ -48,10 +68,16 @@ export const StoreLocation: React.FC = () => {
                     Sábado: 08h às 13h (Plantão Seminovos)
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-tertiary-fixed flex items-center justify-center text-tertiary shrink-0 mt-0.5">
+              <motion.div
+                initial={{ opacity: 0, x: -15 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="flex items-start gap-3.5 group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-tertiary-fixed flex items-center justify-center text-tertiary shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
                   <span className="material-symbols-outlined text-[20px]">chat</span>
                 </div>
                 <div>
@@ -65,48 +91,55 @@ export const StoreLocation: React.FC = () => {
                     +55 83 98897-0601
                   </a>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             <div className="flex flex-wrap items-center gap-4 pt-2">
-              <a
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-on-primary font-label-md text-label-md font-semibold hover:bg-primary-container transition-all shadow-sm active:scale-95"
+              <motion.a
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.96 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-on-primary font-label-md text-label-md font-semibold hover:bg-primary-container shadow-sm hover:shadow-lg transition-colors"
                 href="https://maps.google.com/?q=Rua+Seleno+Gomes+Maropo+44+Intermares+Cabedelo+PB"
                 rel="noopener noreferrer"
                 target="_blank"
               >
                 <span className="material-symbols-outlined text-[20px]">map</span>
                 <span>Abrir no Google Maps / Waze</span>
-              </a>
+              </motion.a>
             </div>
           </div>
 
-          {/* Right: Interactive Location Preview Card */}
           <div className="lg:col-span-6 flex flex-col">
-            <div className="relative w-full h-full min-h-[340px] rounded-2xl overflow-hidden shadow-inner flex flex-col justify-between p-6 border border-outline-variant/30">
-              {/* Background map imagery */}
+            <motion.div
+              whileHover={{ scale: 1.01 }}
+              transition={{ duration: 0.4 }}
+              className="relative w-full h-full min-h-[340px] rounded-2xl overflow-hidden shadow-inner flex flex-col justify-between p-6 border border-outline-variant/30"
+            >
               <div
-                className="absolute inset-0 w-full h-full bg-cover bg-center"
+                className="absolute inset-0 w-full h-full bg-cover bg-center transition-transform duration-700 ease-out hover:scale-105"
                 style={{
                   backgroundImage:
                     "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDWXhoh2dQRW6CRG5RfPVRDrRJBd86qULlU2ZDUFjS7pP_2rjjbGkeNMbKoyj2pu4vzyXKyYTS0JRdUYOvOWwMyDjWxx4mp0GihGkFXKfkWvF1csSU4OvtalicjgHHCs-A9B-eUEppJZjGXd5UlXS-Lmb2FeHc33fW4QvfeawC4lwPSxjcTWc7eFPCiv6DFw7I8PNB97fHEm6KvlfSk9MAnTHwCmnuvwzPw6M19psrJ')",
                 }}
               ></div>
 
-              {/* Map Overlay Gradients & Badges */}
               <div className="relative z-10 flex items-center justify-between">
                 <span className="px-3.5 py-1.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-on-surface font-mono-spec text-[12px] font-bold shadow-sm flex items-center gap-1.5">
                   <span className="material-symbols-outlined text-primary text-[16px]">local_parking</span>
                   Estacionamento próprio
                 </span>
-                <span className="px-3 py-1 rounded-full bg-tertiary/90 backdrop-blur-md text-on-tertiary font-mono-spec text-[11px] font-semibold">
+                <span className="px-3 py-1 rounded-full bg-tertiary/90 backdrop-blur-md text-on-tertiary font-mono-spec text-[11px] font-semibold shadow-sm">
                   Fácil Acesso
                 </span>
               </div>
 
-              {/* Stylized Floating Pin Marker Card */}
-              <div className="relative z-10 self-center bg-surface-container-lowest/95 backdrop-blur-md p-4 rounded-2xl shadow-xl flex items-center gap-3 max-w-xs border border-white/50">
-                <div className="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0">
+              <motion.div
+                animate={{ y: [0, -5, 0] }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+                className="relative z-10 self-center bg-surface-container-lowest/95 backdrop-blur-md p-4 rounded-2xl shadow-xl flex items-center gap-3 max-w-xs border border-white/50"
+              >
+                <div className="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0 shadow-md">
                   <span className="material-symbols-outlined text-[20px]">storefront</span>
                 </div>
                 <div className="min-w-0">
@@ -117,7 +150,7 @@ export const StoreLocation: React.FC = () => {
                     Intermares • Fácil parada na porta
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               <div className="relative z-10">
                 <div className="px-3.5 py-2 rounded-xl bg-surface-container-lowest/90 backdrop-blur-md text-on-surface font-body-sm text-[12px] flex items-center justify-between shadow-sm">
@@ -125,11 +158,10 @@ export const StoreLocation: React.FC = () => {
                   <span className="material-symbols-outlined text-tertiary text-[18px]">navigation</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
-
