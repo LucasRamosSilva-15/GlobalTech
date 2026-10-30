@@ -36,7 +36,7 @@ export const TechnicalAssistance: React.FC = () => {
   )}`;
 
   return (
-    <section className="w-full max-w-[1440px] mx-auto px-margin-mobile lg:px-margin py-8" id="assistencia-tecnica">
+    <section className="w-full max-w-[1440px] mx-auto px-margin-mobile lg:px-margin py-8 scroll-mt-28" id="assistencia-tecnica">
       <motion.div
         initial={{ opacity: 0, y: 35, scale: 0.98 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}

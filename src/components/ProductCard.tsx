@@ -34,18 +34,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect, ind
 
   return (
     <motion.div
-      layout
-      initial={{ opacity: 0, y: 35, scale: 0.95 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: '-40px' }}
-      exit={{ opacity: 0, scale: 0.9 }}
+      initial={{ opacity: 0, y: 25 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-20px' }}
+      exit={{ opacity: 0 }}
       transition={{
-        duration: 0.55,
-        delay: (index % 4) * 0.08,
+        duration: 0.45,
+        delay: (index % 4) * 0.06,
         ease: [0.16, 1, 0.3, 1] as const,
       }}
       whileHover={{ y: -6 }}
-      className="product-item bg-surface-container-lowest rounded-2xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group border border-outline-variant/30 hover:border-primary/30"
+      className="product-item bg-surface-container-lowest rounded-2xl p-5 shadow-sm hover:shadow-xl transition-shadow transition-colors duration-300 flex flex-col justify-between group border border-outline-variant/30 hover:border-primary/30"
     >
       <div>
         <div className="flex items-center justify-between mb-3">

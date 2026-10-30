@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -20,6 +20,11 @@ export const Catalog: React.FC<CatalogProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('populares');
   const [activeModalProduct, setActiveModalProduct] = useState<Product | null>(null);
+  const [visibleCount, setVisibleCount] = useState<number>(12);
+
+  useEffect(() => {
+    setVisibleCount(12);
+  }, [selectedCategory, searchQuery, sortBy]);
 
   const filteredProducts = useMemo(() => {
     let result = [...PRODUCTS];
@@ -49,8 +54,12 @@ export const Catalog: React.FC<CatalogProps> = ({
     return result;
   }, [selectedCategory, searchQuery, sortBy]);
 
+  const displayedProducts = useMemo(() => {
+    return filteredProducts.slice(0, visibleCount);
+  }, [filteredProducts, visibleCount]);
+
   return (
-    <section className="w-full max-w-[1440px] mx-auto px-margin-mobile lg:px-margin pt-12 pb-16" id="catalogo-produtos">
+    <section className="w-full max-w-[1440px] mx-auto px-margin-mobile lg:px-margin pt-12 pb-16 scroll-mt-28" id="catalogo-produtos">
       <motion.div
         initial={{ opacity: 0, y: 25 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -160,13 +169,49 @@ export const Catalog: React.FC<CatalogProps> = ({
       </motion.div>
 
       <motion.div
-        layout
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4 }}
+        className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 pb-1"
+      >
+        <div className="flex items-center gap-2.5">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-container-low border border-outline-variant/40 text-[13px] font-mono-spec text-on-surface">
+            <span className="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+            <span>
+              Mostrando <strong className="text-primary font-bold">{displayedProducts.length}</strong> de{' '}
+              <strong className="text-on-surface font-bold">{filteredProducts.length}</strong> produtos carregados{' '}
+              <span className="text-on-surface-variant font-normal">({PRODUCTS.length} no catálogo da loja)</span>
+            </span>
+          </div>
+        </div>
+
+        <div className="hidden sm:flex items-center gap-3">
+          <div className="w-36 h-2 bg-surface-container rounded-full overflow-hidden border border-outline-variant/30">
+            <motion.div
+              className="h-full bg-primary rounded-full"
+              initial={{ width: 0 }}
+              animate={{
+                width: `${filteredProducts.length > 0 ? (displayedProducts.length / filteredProducts.length) * 100 : 0}%`,
+              }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+            />
+          </div>
+          <span className="text-[11px] font-mono-spec text-on-surface-variant">
+            {filteredProducts.length > 0
+              ? Math.round((displayedProducts.length / filteredProducts.length) * 100)
+              : 0}%
+          </span>
+        </div>
+      </motion.div>
+
+      <div
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4"
         id="product-grid"
       >
-        <AnimatePresence mode="popLayout">
-          {filteredProducts.length > 0 ? (
-            filteredProducts.map((product, idx) => (
+        <AnimatePresence>
+          {displayedProducts.length > 0 ? (
+            displayedProducts.map((product, idx) => (
               <ProductCard
                 key={product.id}
                 product={product}
@@ -202,7 +247,39 @@ export const Catalog: React.FC<CatalogProps> = ({
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.div>
+      </div>
+
+      {visibleCount < filteredProducts.length && (
+        <div className="w-full flex flex-col items-center justify-center pt-10 pb-4">
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.96 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+            onClick={(e) => {
+              e.currentTarget.blur();
+              setVisibleCount((prev) => prev + 4);
+            }}
+            className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-2xl bg-surface-container-lowest border-2 border-primary/20 hover:border-primary text-primary hover:bg-primary hover:text-on-primary font-label-md text-[14px] font-bold shadow-md transition-all group"
+          >
+            <span className="material-symbols-outlined text-[20px] group-hover:translate-y-0.5 transition-transform">
+              expand_circle_down
+            </span>
+            <span>Carregar Mais Produtos ({filteredProducts.length - visibleCount} restantes)</span>
+          </motion.button>
+          <span className="text-[12px] font-mono-spec text-on-surface-variant mt-3">
+            Exibindo {displayedProducts.length} de {filteredProducts.length} produtos disponíveis
+          </span>
+        </div>
+      )}
+
+      {visibleCount >= filteredProducts.length && filteredProducts.length > 12 && (
+        <div className="w-full flex flex-col items-center justify-center pt-8 pb-2">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-low border border-outline-variant/30 text-on-surface-variant text-[12px] font-mono-spec">
+            <span className="material-symbols-outlined text-tertiary text-[16px]">check_circle</span>
+            <span>Todos os {filteredProducts.length} produtos disponíveis da loja foram carregados</span>
+          </div>
+        </div>
+      )}
 
       <AnimatePresence>
         {activeModalProduct && (

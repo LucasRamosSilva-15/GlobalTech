@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 export const StoreLocation: React.FC = () => {
   return (
-    <section className="w-full max-w-[1440px] mx-auto px-margin-mobile lg:px-margin py-12" id="onde-estamos">
+    <section className="w-full max-w-[1440px] mx-auto px-margin-mobile lg:px-margin py-12 scroll-mt-28" id="onde-estamos">
       <motion.div
         initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}

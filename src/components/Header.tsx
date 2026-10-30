@@ -76,6 +76,41 @@ export const Header: React.FC<HeaderProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [mobileMenuOpen]);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      const targetId = window.location.hash.replace('#', '');
+      const element = document.getElementById(targetId);
+      if (element) {
+        setTimeout(() => {
+          const headerOffset = 110;
+          const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+          const offsetPosition = elementPosition - headerOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth',
+          });
+        }, 150);
+      }
+    }
+  }, []);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, id: string) => {
+    if (pathname === '/' && id !== 'catalogo-tabela') {
+      e.preventDefault();
+      const element = document.getElementById(id);
+      if (element) {
+        const headerOffset = 110;
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - headerOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        });
+        window.history.pushState(null, '', `#${id}`);
+      }
+    }
+  };
+
   return (
     <motion.header
       initial={{ y: -60, opacity: 0 }}
@@ -143,6 +178,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <Link
                   key={link.href}
                   href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href, link.id)}
                   className={`relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-[13px] font-label-md font-medium transition-all ${isActive
                       ? 'text-primary font-semibold bg-surface-container-lowest shadow-sm'
                       : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container/50'
@@ -296,7 +332,10 @@ export const Header: React.FC<HeaderProps> = ({
                   <Link
                     key={link.href}
                     href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={(e) => {
+                      setMobileMenuOpen(false);
+                      handleNavClick(e, link.href, link.id);
+                    }}
                     className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-label-md text-[14px] transition-colors ${isActive
                         ? 'bg-primary/10 text-primary font-bold'
                         : 'text-on-surface hover:bg-surface-container font-medium'
