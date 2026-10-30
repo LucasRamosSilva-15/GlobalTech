@@ -166,10 +166,11 @@ export const Catalog: React.FC<CatalogProps> = ({
       >
         <AnimatePresence mode="popLayout">
           {filteredProducts.length > 0 ? (
-            filteredProducts.map((product) => (
+            filteredProducts.map((product, idx) => (
               <ProductCard
                 key={product.id}
                 product={product}
+                index={idx}
                 onSelect={(p) => setActiveModalProduct(p)}
               />
             ))

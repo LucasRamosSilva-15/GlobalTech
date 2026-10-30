@@ -313,11 +313,19 @@ export default function CatalogoTabelaPage() {
                 </thead>
                 <tbody className="divide-y divide-outline-variant/30 text-on-surface font-body-sm text-[14px]">
                   {filteredProducts.length > 0 ? (
-                    filteredProducts.map((p) => {
+                    filteredProducts.map((p, idx) => {
                       const isBatteryPercentage = p.batteryHealth && p.batteryHealth.includes('%');
                       return (
-                        <tr
+                        <motion.tr
                           key={p.id}
+                          initial={{ opacity: 0, y: 15 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true, margin: '-20px' }}
+                          transition={{
+                            duration: 0.35,
+                            delay: Math.min((idx % 10) * 0.04, 0.35),
+                            ease: [0.16, 1, 0.3, 1] as const,
+                          }}
                           className="hover:bg-surface-container-low/70 transition-colors group cursor-pointer"
                           onClick={() => setSelectedProduct(p)}
                         >
@@ -432,7 +440,7 @@ export default function CatalogoTabelaPage() {
                               <span>Pedir</span>
                             </motion.a>
                           </td>
-                        </tr>
+                        </motion.tr>
                       );
                     })
                   ) : (

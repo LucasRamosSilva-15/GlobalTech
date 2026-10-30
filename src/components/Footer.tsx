@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
             <div className="flex items-center gap-3">
               <div className="relative h-8 w-8 rounded-lg overflow-hidden flex items-center justify-center bg-primary/10">
                 <Image
-                  src="/logo.png"
+                  src="/logoGrande2.png"
                   alt="Globaltech Brand Logo"
                   width={32}
                   height={32}
